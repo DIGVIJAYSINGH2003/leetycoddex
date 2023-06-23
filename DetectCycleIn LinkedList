@@ -1,0 +1,44 @@
+class Solution {
+public:
+    ListNode *detectCycle(ListNode *head) {
+       // bruteforce approach is to use hash table to compare but space complexicity will o(N) so to optimize 
+       // we will use slow and fast pointer concept , it will reduce space complexicity to o(1)
+
+       if ( head == NULL || head -> next == NULL ) return NULL;
+
+       ListNode * fast = head;
+       ListNode * slow =head ;
+
+       while (fast -> next && fast -> next->next)
+       {
+           fast = fast -> next -> next;
+           slow = slow -> next;
+
+
+           if ( slow == fast )
+           {
+               break; // if it is proved that its cycliuc
+           }
+
+       }
+
+       if (!fast -> next || !fast -> next-> next) return NULL; // if it is not cyclic
+
+       // now if fast and slow have met , then take fasst again to head and run fast by one step and also run slow by one step wherever the slow was , then if they meet , the meeting point will be the starting point of cycle in linkedlist
+       fast =head;
+       while (fast!= slow)
+       {
+           fast = fast ->  next;
+           slow = slow -> next ;
+
+           if (slow == fast)
+           break;
+           
+       }
+
+
+       return fast; // returns the meeting point
+
+    }
+
+};
